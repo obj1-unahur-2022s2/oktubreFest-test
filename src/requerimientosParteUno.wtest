@@ -1,0 +1,51 @@
+import Personas.*
+import Marcas.*
+
+ describe "requerimientos"{
+ 
+       const arthur = new PersonaBelga(peso=100,nivelDeAguante=6,leGustaMusicaTradicional=true)
+       const bora = new PersonaCheca(peso=80,nivelDeAguante=10,leGustaMusicaTradicional=false)
+       const bertram = new PersonaAlemana(peso=70,nivelDeAguante=8,leGustaMusicaTradicional=true)
+ 
+       const cerveza1 = new CervezaRubia(cantLupulo=8,origen="Alemania",graduacion=9)
+       const cerveza2 = new CervezaNegra(cantLupulo=3,origen="Irlanda")
+       const cerveza3 = new CervezaRoja(cantLupulo=8,origen="Irlanda")
+ 
+       const jarra1 = new Jarra(capacidad=1,marca=cerveza1)
+       const jarra2 = new Jarra(capacidad=0.5,marca=cerveza3)
+       const jarra3 = new Jarra(capacidad=1,marca=cerveza2)
+       
+       
+  ////////// Requerimientos - primera parte/////////////////
+   
+      test "Arthur y su cerveza" {
+      	 arthur.comprarJarra(jarra3)
+      	 
+         assert.notThat(arthur.leGustaCerveza(jarra3.marca()))
+      }
+
+      test "Bora y su cerveza" {
+      	bora.comprarJarra(jarra1)
+      	
+         assert.that(bora.leGustaCerveza(jarra1.marca()))
+      }
+
+      test "Bertram y su cerveza" {
+       	bertram.comprarJarra(jarra2)
+       	
+         assert.that(bertram.leGustaCerveza(jarra2.marca()))
+      }
+
+      test "contenido de Alcohol jarra 1"{
+         assert.equals(0.09,jarra1.nivelAlcohol())
+      }
+      
+      test "contenido de Alcohol jarra 2"{
+         assert.equals(0.0625,jarra2.nivelAlcohol())
+      }
+ 
+      test "contenido de Alcohol jarra 3"{
+         assert.equals(0.06,jarra3.nivelAlcohol())
+      }
+
+}
