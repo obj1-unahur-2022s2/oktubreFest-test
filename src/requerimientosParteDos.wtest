@@ -5,56 +5,67 @@ import Marcas.*
 describe "requerimientos"{
  
        const arthur = new PersonaBelga(peso=70,nivelDeAguante=40,leGustaMusicaTradicional=true)
-       const bora = new PersonaCheca(peso=80,nivelDeAguante=10,leGustaMusicaTradicional=false)
-       const bertram = new PersonaAlemana(peso=70,nivelDeAguante=8,leGustaMusicaTradicional=false)
+       const bora = new PersonaCheca(peso=80,nivelDeAguante=10,leGustaMusicaTradicional=true)
+       const bertram = new PersonaAlemana(peso=70,nivelDeAguante=10,leGustaMusicaTradicional=false)
  
        const heineken = new CervezaRubia(cantLupulo=8,origen="Alemania",graduacion=9)
        const corona = new CervezaRubia(cantLupulo=6,origen="Alemania",graduacion=4)
        const oyster = new CervezaNegra(cantLupulo=3,origen="Irlanda")
        const hofbrau = new CervezaRoja(cantLupulo=8,origen="Irlanda")
- 
+       const guinness = new CervezaNegra(cantLupulo=4,origen="Irlanda")
        
        
        const carpaHeineken = new Carpas(limite=4,marca=heineken,tieneMusicaTradicional=true)
        const carpaCorona = new Carpas(limite=10,marca=corona,tieneMusicaTradicional=false)
-       const carpaOyster = new Carpas(limite=2,marca=oyster,tieneMusicaTradicional=true)
+       const carpaOyster = new Carpas(limite=2,marca=oyster,tieneMusicaTradicional=false)
        const carpaHofbrau = new Carpas(limite=8,marca=hofbrau,tieneMusicaTradicional=true)
-       
+       const carpaGuinness = new Carpas(limite=12,marca=guinness,tieneMusicaTradicional=false)
        
   ////////// Requerimientos - segunda parte/////////////////
   
-    test "arthur"{
-    	 
-    	 
-         assert.that(arthur.quiereEntrarA(carpaHeineken))
-         assert.that (carpaHeineken.puedeEntrar(arthur))
-         carpaHeineken.ingresarPersona(arthur)
-         carpaHeineken.servirJarra(arthur,0.5)
+    test "arthur quiere entrar a una carpa"{
+    	 assert.that(arthur.quiereEntrarA(carpaHeineken))
+    	 }// le gusta la marca y musica tradicional, la carpa tiene musica
          
-         assert.notThat(arthur.esPatriota())
-    	 assert.that (carpaHeineken.puedeEntrar(arthur))
-    	 assert.notThat(arthur.esEbrioEmpedernido())
-    }
-  
-    test "bertram"{
-    	 carpaHeineken.ingresarPersona(bora)
-    	 
+    test "bertram no quiere entrar a una carpa"{  
     	 assert.notThat(bertram.quiereEntrarA(carpaHeineken))
-    	  
-    	 carpaCorona.ingresarPersona(bora)
-    	 carpaCorona.ingresarPersona(arthur)
-    	 assert.notThat(bertram.quiereEntrarA(carpaCorona))
-    	 
-    	 carpaCorona.ingresarPersona(bertram)
-    	 
-    	 assert.that(bertram.esPatriota())
+    	 }// le gusta la marca, pero no la musica, la carpa tiene musica y no hay personas ingresadas en cantidad par
+  
+    test "bora puede entrar a una carpa"{
+    	 assert.that(carpaHofbrau.dejaIngresar(bora))
+   	     assert.that(carpaHofbrau.puedeEntrar(bora))  
+         }
          
+    test "bora ingresa a una carpa"{
+   	     assert.that(carpaHofbrau.puedeEntrar(bora))
+         carpaHofbrau.ingresarPersona(bora)	     
+         }
          
-         assert.that(bertram.esEbrioEmpedernido())
+    test "arthur no es ingresado a la carpa Corona"{
+   	      assert.notThat(carpaCorona.puedeEntrar(arthur))
+    	  carpaCorona.ingresarPersona(arthur)	 	  
+         }// no es ingresado porque no puede entrar, no quiere porque le gusta la musica y la carpa no tiene
+    
+    test "arthur no recibe jarra"{  
+    	 assert.notThat(carpaCorona.puedeEntrar(arthur))
+         carpaCorona.servirJarra(arthur,3)
+         }//no está igresado a la carpa
+    
+    test "bertram entra a carpa Guinness pero despues no puede entrar a carpa Oyster"{
+    	 carpaGuinness.ingresarPersona(bertram)
+    	 carpaGuinness.servirJarra(bertram,3)
+    	 assert.notThat(carpaOyster.puedeEntrar(bertram))
+    	 }
+    
+    test "bertram es ebrio empedernido y no es patriota"{
+    	 carpaGuinness.ingresarPersona(bertram)
+    	 carpaGuinness.servirJarra(bertram,1)
+    	 carpaOyster.ingresarPersona(bertram)
+    	 carpaOyster.servirJarra(bertram,3)
+    	 carpaOyster.servirJarra(bertram,2)
     	 
-    }
-  
-  
-  
-  
+    	 assert.that(bertram.esEbrioEmpedernido())
+    	 assert.notThat(bertram.esPatriota())
+    	 } 
+     
 }

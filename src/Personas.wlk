@@ -19,34 +19,54 @@ class Persona{
 
   method esEbrioEmpedernido()= jarrasCompradas.all({j => j.capacidad()>=1 })
   
+  method leGustaCerveza(unaMarca)
+  method quiereEntrarA(unaCarpa)= self.leGustaCerveza(unaCarpa.marca())
+                                  and (self.leGustaMusicaTradicional()== unaCarpa.tieneMusicaTradicional())  
+ 
+  
   method esPatriota()= jarrasCompradas.all({j => j.marca().origen()==self.nacionalidad()})
+  method comproJarrasEn()=jarrasCompradas.map({j => j.enCarpa()})
+  
+  method marcasCompradas()=jarrasCompradas.map({j => j.marca()}).asSet()
+  
+ /* method marcasFaltan(marcas)= marcas.asSet().difference(self.marcasCompradas())
+  method cantMarcasFaltan(marcas)=self.marcasFaltan(marcas).size()*/
+  
+ 
+ 
+  
+  
+  
+  method ultimaJarraComprada()=jarrasCompradas.last()
+  
+  method estaEntrandoEnVicio(){
+  	   return jarrasCompradas.all({j => j.capacidad()<= self.ultimaJarraComprada().capacidad()})
+  	    }
   	  
-}
-
+     
+  }
 
 
  class PersonaBelga inherits Persona{
  	
   override method nacionalidad()="Belgica"
  	
-  method leGustaCerveza(unaMarca)= unaMarca.cantLupulo()>4
-  method quiereEntrarA(unaCarpa)= self.leGustaCerveza(unaCarpa.marca())
-                                  and (self.leGustaMusicaTradicional()== unaCarpa.tieneMusicaTradicional()) 
+  override method leGustaCerveza(unaMarca)= unaMarca.cantLupulo()>4
+ 
  }
  
  class PersonaCheca inherits Persona{
  	
  	override method nacionalidad()="Checoslovaquia"
- 	method leGustaCerveza(unaMarca)= unaMarca.graduacion()>8
- 	method quiereEntrarA(unaCarpa)= self.leGustaCerveza(unaCarpa.marca())
-                                  and (self.leGustaMusicaTradicional()== unaCarpa.tieneMusicaTradicional()) 
+ 	override method leGustaCerveza(unaMarca)= unaMarca.graduacion()>8
+ 	 
  }
  
  class PersonaAlemana inherits Persona{
  	
  	 override method nacionalidad()="Alemania"
- 	 method leGustaCerveza(unaMarca)= true
- 	 method quiereEntrarA(unaCarpa)= self.leGustaCerveza(unaCarpa.marca())
-                                  and (self.leGustaMusicaTradicional()== unaCarpa.tieneMusicaTradicional())
-                                  and (unaCarpa.personasIngresadas().size()).even()
+ 	 override method leGustaCerveza(unaMarca)= true
+ 	 override method quiereEntrarA(unaCarpa)=super(unaCarpa) and (unaCarpa.personasIngresadas().size()).even()
  }
+ 
+ 

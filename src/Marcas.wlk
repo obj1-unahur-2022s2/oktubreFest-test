@@ -27,10 +27,11 @@ class CervezaRoja inherits CervezaNegra{
 class Jarra{
 	var property capacidad
 	var property marca
-
+    var property enCarpa
   
   
   method nivelAlcohol()= capacidad*(marca.graduacion()/100)
+  
 }
 
 

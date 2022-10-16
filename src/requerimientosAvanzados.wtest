@@ -1,0 +1,101 @@
+import Carpas.*
+import Personas.*
+import Marcas.*
+
+describe "requerimientos"{
+ 
+       const arthur = new PersonaBelga(peso=70,nivelDeAguante=40,leGustaMusicaTradicional=true)
+       const milo = new PersonaBelga(peso=90,nivelDeAguante=70,leGustaMusicaTradicional=true)
+       const bora = new PersonaCheca(peso=80,nivelDeAguante=10,leGustaMusicaTradicional=true)
+       const bertram = new PersonaAlemana(peso=70,nivelDeAguante=10,leGustaMusicaTradicional=true)
+       const blaz = new PersonaAlemana(peso=85,nivelDeAguante=12,leGustaMusicaTradicional=true)
+       const heineken = new CervezaRubia(cantLupulo=8,origen="Alemania",graduacion=9)
+       const carpaHeineken = new Carpas(limite=10,marca=heineken,tieneMusicaTradicional=true)
+       const hofbrau = new CervezaRoja(cantLupulo=8,origen="Irlanda")
+       const carpaHofbrau = new Carpas(limite=8,marca=hofbrau,tieneMusicaTradicional=true)
+      
+      
+      
+      //12
+      /*test "faltan marcas"{ 
+      	carpaHeineken.ingresarPersona(arthur)
+        carpaHeineken.ingresarPersona(bora)
+        carpaHeineken.servirJarra(arthur,2)
+        carpaHeineken.servirJarra(arthur,2)
+        carpaHeineken.servirJarra(bora,1)
+        carpaHeineken.servirJarra(bora,1)
+        carpaHofbrau.ingresarPersona(arthur)
+      	carpaHofbrau.servirJarra(arthur,3)
+         
+        }*/
+      
+      //13
+      test "no es carpa homogenea"{
+      	assert.that(carpaHeineken.puedeEntrar(arthur)) 
+      	assert.that(carpaHeineken.puedeEntrar(bora))
+      	assert.that(carpaHeineken.puedeEntrar(bertram))
+      	assert.that(carpaHeineken.puedeEntrar(blaz))
+      
+        carpaHeineken.ingresarPersona(bertram)
+      	carpaHeineken.ingresarPersona(arthur)
+      	carpaHeineken.ingresarPersona(blaz)
+      	carpaHeineken.ingresarPersona(bora)
+      	
+      	assert.equals(["Alemania","Belgica","Alemania","Checoslovaquia"],carpaHeineken.nacionalidades())
+      	assert.equals(4,carpaHeineken.cantNacionalidades())
+      	assert.equals("Alemania",carpaHeineken.predominaNacionalidad())
+      	
+      	assert.notThat(carpaHeineken.esCarpaHomogenea())
+      }
+      
+      test "es carpa homogenea"{ 
+      	assert.that(carpaHeineken.puedeEntrar(arthur)) 
+      	assert.that(carpaHeineken.puedeEntrar(milo)) 
+      	carpaHeineken.ingresarPersona(arthur)
+      	carpaHeineken.ingresarPersona(milo)
+      	
+      	assert.that(carpaHeineken.esCarpaHomogenea()) 	
+      }
+ 
+      //14
+      
+      test "jarras servidas en carpas"{ 
+      	carpaHeineken.ingresarPersona(arthur)
+      	carpaHeineken.servirJarra(arthur,2)
+      	carpaHofbrau.ingresarPersona(arthur)
+      	carpaHofbrau.servirJarra(arthur,1)
+      	
+        assert.equals([carpaHeineken,carpaHofbrau],arthur.comproJarrasEn()) 
+        }
+        
+      //15
+      test "personas que faltan servir"{ 
+      	carpaHeineken.ingresarPersona(arthur)
+      	carpaHeineken.servirJarra(arthur,2)
+      	carpaHeineken.ingresarPersona(bora)
+      	carpaHeineken.ingresarPersona(blaz)
+      	
+        assert.equals([bora,blaz],carpaHeineken.faltaServirA())
+        }
+        
+      // 16
+       test "arthur no entra en vicio"{ 
+       	  carpaHeineken.ingresarPersona(arthur)
+       	  carpaHeineken.servirJarra(arthur,3)
+          carpaHeineken.servirJarra(arthur,3)
+          carpaHeineken.servirJarra(arthur,2)
+          carpaHeineken.servirJarra(arthur,1)
+          
+          assert.notThat(arthur.estaEntrandoEnVicio())
+          }
+       test "arthur entra en vicio"{ 
+       	  carpaHeineken.ingresarPersona(arthur)
+       	  carpaHeineken.servirJarra(arthur,1)
+          carpaHeineken.servirJarra(arthur,1)
+          carpaHeineken.servirJarra(arthur,2)
+          carpaHeineken.servirJarra(arthur,3)
+          
+          assert.that(arthur.estaEntrandoEnVicio())
+       
+       }
+}

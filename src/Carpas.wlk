@@ -17,14 +17,15 @@ class Carpas{
   method ingresarPersona(unaPersona){
   	     if (self.puedeEntrar(unaPersona)) 
   	       personasIngresadas.add(unaPersona)
-  	     throw new Exception(message="No se puede ingresar persona")}
- 
+  	     else {throw new Exception(message="No se puede ingresar persona")}
+ }
   
   method servirJarra(unaPersona,capacidad){
   	  if (personasIngresadas.contains(unaPersona)){
   	  	 const jarraServida = new Jarra()
   	  	 jarraServida.capacidad(capacidad)
   	  	 jarraServida.marca(self.marca())
+  	  	 jarraServida.enCarpa(self)
   	  	 jarrasVendidas.add(jarraServida) 
   	  	 unaPersona.comprarJarra(jarraServida)	 
   	 } else {throw new Exception(message="La persona no está ingresada en la carpa")}
@@ -32,4 +33,18 @@ class Carpas{
 
   method cantEbriosEmpedernidos()= personasIngresadas.count({p => p.esEbrioEmpedernido()})
 
-}	
+ ///
+  method nacionalidades()=personasIngresadas.map({p => p.nacionalidad()})
+  method cantNacionalidades()=self.nacionalidades().size()
+  method predominaNacionalidad()=self.nacionalidades().max({nacionalidad=>self.cantNacionalidades()})
+  
+  
+  method esCarpaHomogenea()= personasIngresadas.all({p => p.nacionalidad()== self.predominaNacionalidad()})
+  
+  method faltaServirA()=personasIngresadas.filter({p => not p.comproJarrasEn().contains(self)})
+
+ 
+  
+}
+  
+
