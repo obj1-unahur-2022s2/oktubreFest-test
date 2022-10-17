@@ -29,20 +29,20 @@ class Persona{
   
   method marcasCompradas()=jarrasCompradas.map({j => j.marca()}).asSet()
   
- /* method marcasFaltan(marcas)= marcas.asSet().difference(self.marcasCompradas())
-  method cantMarcasFaltan(marcas)=self.marcasFaltan(marcas).size()*/
   
- 
- 
-  
-  
+  method coincidenciasCon(persona) = self.marcasCompradas().intersection(persona.marcasCompradas())
+  method diferenciasCon(persona) = self.marcasCompradas().difference(persona.marcasCompradas())
+  method esCompatibleCon(persona) = self.coincidenciasCon(persona).size() > self.diferenciasCon(persona).size()
   
   method ultimaJarraComprada()=jarrasCompradas.last()
   
   method estaEntrandoEnVicio(){
   	   return jarrasCompradas.all({j => j.capacidad()<= self.ultimaJarraComprada().capacidad()})
   	    }
-  	  
+  
+ // method gastoTotalEnCerveza()=jarrasCompradas.sum({j => j.precioFinalDeJarra()})
+  
+  //method laCervezaMasCara()=jarrasCompradas.max({j => j.precioFinalDeJarra()})
      
   }
 

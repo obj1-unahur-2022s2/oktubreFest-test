@@ -6,6 +6,7 @@ class Carpas{
 	var property limite
 	var property marca
 	var property tieneMusicaTradicional
+	//var property recargoDeVenta
 	const property personasIngresadas=[]
 	const property jarrasVendidas=[]
 	
@@ -27,7 +28,8 @@ class Carpas{
   	  	 jarraServida.marca(self.marca())
   	  	 jarraServida.enCarpa(self)
   	  	 jarrasVendidas.add(jarraServida) 
-  	  	 unaPersona.comprarJarra(jarraServida)	 
+  	  	 unaPersona.comprarJarra(jarraServida)
+  	  	  
   	 } else {throw new Exception(message="La persona no está ingresada en la carpa")}
  }
 
@@ -42,9 +44,12 @@ class Carpas{
   method esCarpaHomogenea()= personasIngresadas.all({p => p.nacionalidad()== self.predominaNacionalidad()})
   
   method faltaServirA()=personasIngresadas.filter({p => not p.comproJarrasEn().contains(self)})
-
+  
+  
+ // method precioDeVentaPorLitro()=self.marca().precioPorLitro()+ recargoDeVenta
  
   
 }
-  
-
+//object recargoFijo{method porcentaje(_)=30}
+//object recargoPorCant{method porcentaje(unaCarpa)= if(unaCarpa.personasIngresadas().size()==unaCarpa.limite()*0.5){40}else{25}}
+//object recargoPorEbriedad{ method porcentaje(unaCarpa)= if(unaCarpa.cantEbriosEmpedernidos()>=(unaCarpa.personasIngresadas()*0.75){50}else{20}} 

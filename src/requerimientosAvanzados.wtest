@@ -17,17 +17,21 @@ describe "requerimientos"{
       
       
       //12
-      /*test "faltan marcas"{ 
+      test "son compatibles"{ 
       	carpaHeineken.ingresarPersona(arthur)
+        carpaHeineken.servirJarra(arthur,2)
+        
         carpaHeineken.ingresarPersona(bora)
-        carpaHeineken.servirJarra(arthur,2)
-        carpaHeineken.servirJarra(arthur,2)
         carpaHeineken.servirJarra(bora,1)
-        carpaHeineken.servirJarra(bora,1)
+        
         carpaHofbrau.ingresarPersona(arthur)
       	carpaHofbrau.servirJarra(arthur,3)
-         
-        }*/
+      	
+      	carpaHofbrau.ingresarPersona(bora)
+      	carpaHofbrau.servirJarra(bora,2)
+      	
+         assert.that(arthur.esCompatibleCon(bora))
+        }
       
       //13
       test "no es carpa homogenea"{
